@@ -6,7 +6,7 @@ const usersRoutes = Router()
 function MyMiddleware(request, response, next) { // COM MIDDLAWERA CONSEGUIMOS ACESSAR A REQUISIÇÃO, A REPOSTA E A CHAMAR O DESTINO)
     console.log("Você passou pelo middleware")
     if(!request.body.isAdmin) {
-        return response.json({ message : "user unauthorized" })
+        return response.json({ message : "User unauthorized" })
     }
 
     next() // CHAMA A PROXIMA FUNÇÃO, SE NÃO FICA RODANDO ATÉ DAR ERRO
@@ -15,7 +15,8 @@ function MyMiddleware(request, response, next) { // COM MIDDLAWERA CONSEGUIMOS A
 const usersController = new UsersController()
 
 
-usersRoutes.post('/', MyMiddleware, usersController.create) 
+usersRoutes.post('/', MyMiddleware, usersController.create)
+usersRoutes.put('/:id', usersController.update)
 
 module.exports = usersRoutes
 

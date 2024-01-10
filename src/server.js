@@ -1,29 +1,27 @@
 require("express-async-errors")
 
+const migrationRun = require("./database/sqlite/migrations") // CONECTANDO BANCO DE DADOS COM SERVIDOR
+const AppError = require("./utils/AppError")
 
 const express = require("express") // IMPORTOU EXPRESS
+const routes = require("./routes")
 const req = require("express/lib/request")
 
-const database = require("./database/sqlite") // CONECTANDO BANCO DE DADOS COM SERVIDOR
-
-const routes = require("./routes")
-const AppError = require("./utils")
+migrationRun(); 
 
 const app = express() // INICIALIZOU O EXPRESS
 app.use(express.json()) // PRECISAMOS DEFINIR O PADRÃO PRA RECEBER AS INFOS ATRAVES DO CORPO DA REQUIS
-
 app.use(routes)
 
-database(); 
 
 // ROUTE PARAMS - são obrigatórios os parametros impostos
-app.get('/message/:id/:user', (request, response) => { // : para saber que é um parametro (id e user são parametros)
-    const { id, user } = request.params // DESCONTRUIR
+//app.get('/message/:id/:user', (request, response) => { // : para saber que é um parametro (id e user são parametros)
+//    const { id, user } = request.params // DESCONTRUIR
 
-    response.send(`
-    Id da mensagem: ${id}. 
-    Usúario ${user}.`) // ENDEREÇO DA ROTA + ENVIO DA RESPOSTA 
-}) // ATRAVÉS DO REQUEST QUE CONSEGUIMOS ENVIAR INFORMAÕES PRA ROTA E OBTER INFORMAÇÕES COM REQUEST
+//    response.send(`
+//    Id da mensagem: ${id}. 
+//    Usúario ${user}.`) // ENDEREÇO DA ROTA + ENVIO DA RESPOSTA 
+//}) // ATRAVÉS DO REQUEST QUE CONSEGUIMOS ENVIAR INFORMAÕES PRA ROTA E OBTER INFORMAÇÕES COM REQUEST
  
 
 // QUERY PARAMS
